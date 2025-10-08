@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чаты</title>
+</head>
+<body>
+    <h1>Чаты</h1>
+
+    <!-- Форма для создания чата -->
+    <form method="POST" action="/chats">
+        <label for="name">Название чата:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Создать чат</button>
+    </form>
+
+    <!-- Форма для поиска чатов -->
+    <form method="GET" action="/chats">
+        <label for="search">Поиск чатов:</label>
+        <input type="text" id="search" name="search">
+        <button type="submit">Найти</button>
+    </form>
+
+    <!-- Выводим список чатов -->
+    <h2>Список чатов:</h2>
+    <ul>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        {% for chat in chats %}
+            <li><a href="{{ chat.url }}">{{ chat.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

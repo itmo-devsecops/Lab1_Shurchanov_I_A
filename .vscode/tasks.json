@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Website",
+            "type": "shell",
+            "command": "python \"C:\\Users\\ivani\\OneDrive\\Рабочий стол\\Веб-прога\\Лаба 1\\Website\\program1.py\""
+        },
+        {
+            "label": "Run Chat",
+            "type": "shell",
+            "command": "python \"C:\\Users\\ivani\\OneDrive\\Рабочий стол\\Веб-прога\\Лаба 1\\Chat\\program2.py\""
+        },
+        {
+            "label": "Run Both Programs",
+            "dependsOn": ["Run Website", "Run Chat"]
+        }
+    ]
+}
