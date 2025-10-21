@@ -13,9 +13,7 @@ from datetime import datetime, timedelta
 
 
 
-REMOVED = "REMOVED" #для gitleaks
-VERY_REMOVED = "REMOVED" #для gitleaks
-REMOVED = "REMOVED" #ключ к JWT
+REMOVED = "your_secret_key" #ключ к JWT
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
