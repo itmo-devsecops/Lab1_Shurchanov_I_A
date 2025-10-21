@@ -1,0 +1,16 @@
+title = "Lab gitleaks config"
+
+[[rules]]
+id = "demo-secret"
+description = "Ищет конкретно SECRET"
+regex = "SECRET\\s*=\\s*[\"'][^\"']+[\"']"
+keywords = ["REMOVED"]
+
+[[rules]]
+id = "key-detection"
+description = "Ищет переменные с KEY в имени (не короткий key)"
+regex = "(?i)[A-Za-z0-9_]+KEY[A-Za-z0-9_]*\\s*=\\s*[\"'][^\"']+[\"']"
+keywords = ["KEY"]
+
+[allowlist]
+paths = ["README.md"]
