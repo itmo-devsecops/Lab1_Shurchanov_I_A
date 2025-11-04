@@ -74,3 +74,8 @@ async def chat_websocket(websocket: WebSocket, chat_id: str):
                 await connection.send_text(f"Сообщение от {username}: {data}")
     except WebSocketDisconnect:
         active_connections[chat_id].remove(websocket)
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -1,1 +1,0 @@
-# Lab1_Shurchanov_I_A

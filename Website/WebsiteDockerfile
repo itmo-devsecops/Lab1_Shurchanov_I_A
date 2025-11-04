@@ -1,0 +1,44 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.13-slim AS base
+
+# Builder stage: install dependencies in a venv
+FROM base AS builder
+WORKDIR /app
+
+# Install build dependencies (if any needed, e.g. gcc, libpq-dev, etc.)
+# For now, assume none are needed for this project
+
+# Copy requirements.txt and install dependencies using pip cache and venv
+COPY --link requirements.txt ../requirements.txt
+RUN --mount=type=bind,source=../requirements.txt,target=requirements.txt,readonly \
+    --mount=type=cache,target=/root/.cache/pip \
+    python -m venv .venv && \
+    .venv/bin/pip install --upgrade pip && \
+    .venv/bin/pip install -r requirements.txt
+
+# Final stage: copy app code and venv, set up non-root user
+FROM base AS final
+WORKDIR /app
+
+# Create non-root user and group
+RUN addgroup --system webgroup && adduser --system --ingroup webgroup webuser
+
+# Copy virtual environment from builder
+COPY --from=builder /app/.venv .venv
+
+# Copy application code and templates
+COPY --link Website.py .
+COPY --link Templates ./Templates
+
+# Set environment variables
+ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONUNBUFFERED=1
+
+USER webuser
+
+# Expose port (assuming Flask default, change if needed)
+EXPOSE 5000
+
+# Start the application (assuming Website.py is the entrypoint)
+CMD ["uvicorn", "Website:app", "--host", "0.0.0.0", "--port", "5000"]

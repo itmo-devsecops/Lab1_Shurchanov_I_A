@@ -1,0 +1,36 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.13-slim AS base
+WORKDIR /app
+
+# Builder stage: install dependencies in a venv
+FROM base AS builder
+# Copy requirements.txt only, for better cache usage
+COPY --link ../requirements.txt ./requirements.txt
+# Create virtual environment and install dependencies
+RUN --mount=type=cache,target=/root/.cache/pip \
+    python -m venv .venv && \
+    .venv/bin/pip install --upgrade pip && \
+    .venv/bin/pip install -r requirements.txt
+
+# Copy application code
+COPY --link . ./
+
+# Final stage: create non-root user and copy venv/app
+FROM base AS final
+# Create a non-root user
+RUN useradd -m chatuser
+USER chatuser
+WORKDIR /app
+# Copy venv and app from builder
+COPY --from=builder /app/.venv /app/.venv
+COPY --from=builder /app/Chat.py ./Chat.py
+COPY --from=builder /app/Templates ./Templates
+# Set PATH to use venv
+ENV PATH="/app/.venv/bin:$PATH"
+
+# Expose port (adjust if your app uses a different port)
+EXPOSE 8000
+
+# Default command to run the chat service
+CMD ["python", "Chat.py"]

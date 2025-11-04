@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: web
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2004
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+  python-chat:
+    build:
+      context: ./Chat
+      dockerfile: ./ChatDockerfile  # Adjust path if ChatDockerfile is elsewhere
+    container_name: python-chat
+    restart: unless-stopped
+    init: true
+    # env_file: ./Chat/.env  # Uncomment if .env file exists
+    ports:
+      - "5001:8000"  # Exposed in Dockerfile
+    networks:
+      - backend
+
+  python-website:
+    build:
+      context: ./Website
+      dockerfile: ./WebsiteDockerfile  # Adjust path if WebsiteDockerfile is elsewhere
+    container_name: python-website
+    restart: unless-stopped
+    init: true
+    # env_file: ./Website/.env  # Uncomment if .env file exists
+    ports:
+      - "5000:5000"  # Exposed in Dockerfile
+    networks:
+      - backend
+    depends_on:
+      - python-chat  # If Website interacts with Chat, otherwise remove
+
+networks:
+  backend:
+    driver: bridge

@@ -18,7 +18,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-DATABASE_URL = "postgresql://postgres:2004@localhost:5432/web?client_encoding=utf8"  #для теста вместо db нужен localhost, для докера наоборот
+DATABASE_URL = "postgresql://postgres:2004@postgres:5432/web?client_encoding=utf8"  #для теста вместо db нужен localhost, для докера наоборот
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
@@ -71,7 +71,7 @@ def get_token_chat(username: str):
 
 app = FastAPI()
 logger = logging.getLogger("uvicorn.info")
-templates = Jinja2Templates(directory="Website/Templates")
+templates = Jinja2Templates(directory="Templates")
 
 
 class UserRequest(BaseModel):

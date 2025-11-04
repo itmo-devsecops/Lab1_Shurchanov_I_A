@@ -1,0 +1,65 @@
+# Version control
+.git/
+.gitignore
+.hg/
+.svn/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build and output directories
+build/
+dist/
+out/
+tmp/
+temp/
+
+# Test and debug files
+test/
+tests/
+debug/
+*.log
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+Secret.txt
+
+# Local and configuration files
+.local/
+local/
+config.local.*
+*.local.yml
+
+# Documentation and markdown
+README*
+*.md
+docs/
+
+# Docker and compose files
+Dockerfile*
+docker-compose*
+
+# Project-specific patterns
+*.tmp
+
+# Ignore gitleaks and pre-commit configs
+.gitleaksignore
+.gitleaks.toml
+.pre-commit-config.yaml
+
+# Ignore XML BOM (if not needed in container)
+bom.xml

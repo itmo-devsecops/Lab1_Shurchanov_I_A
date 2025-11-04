@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+psycopg2-binary
+pyjwt
+Jinja2==3.0.3
+python-multipart
+websockets
