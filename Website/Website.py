@@ -142,7 +142,7 @@ async def get_chats(request: Request, search: Optional[str] = Query(None), db: S
 
     # Формируем ссылки на чаты, без передачи chat_id в шаблон напрямую
     
-    chat_links = [{"name": chat.name, "url": f"http://localhost:5001/chat/{get_token_chat(str(chat.id))["access_token"]}"} for chat in chats]
+    chat_links = [{"name": chat.name, "url": f"http://localhost:5001/chat/{get_token_chat(str(chat.id))['access_token']}"} for chat in chats]
 
     return templates.TemplateResponse("main_page.html", {"request": request, "chats": chat_links})
 
